@@ -1,0 +1,17 @@
+---
+- name: deploy to k8s
+  hosts: localhost
+  tasks:
+    - name: create k8s namespace
+      k8s:
+        name: my-app
+        api_version: v1
+        kind: namespace
+        state: present
+        kubeconfig: /Users/tusharsharma/desktop/ansible/k8s/kubeconfig.yaml
+    - name: deploy nginx app 
+      k8s:
+        src: /Users/tusharsharma/desktop/ansible/k8s/nginx.yaml
+        state: present
+        kubeconfig: /Users/tusharsharma/desktop/ansible/k8s/kubeconfig.yaml
+        namespace: my-app
